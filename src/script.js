@@ -1,6 +1,3 @@
-import axios from 'axios';
+const key = env.giphyKey;
 
-const gif = document.querySelector('.gif');
-const gifText = gif.querySelector('.gifText');
-
-console.log(gifText);
+console.log(key);

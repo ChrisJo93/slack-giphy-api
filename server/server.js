@@ -2,6 +2,9 @@ const express = require('express');
 const app = express();
 //express and app variables bare minimum to start server 1 of3
 
+// Plugins
+require('dotenv').config();
+
 // Middle Ware
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
