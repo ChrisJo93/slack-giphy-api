@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 const gif = document.querySelector('.gif');
 const gifText = gif.querySelector('.gifText');
 
