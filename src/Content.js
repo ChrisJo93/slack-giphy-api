@@ -17,7 +17,9 @@ class Content extends Component {
       });
     });
     axios
-      .post(`https://slack.com/api/conversations.list`, token)
+      .get(`https://slack.com/api/conversations.list`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((res) => {
         console.log('in slack call', res.data);
       })
