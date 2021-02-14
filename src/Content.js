@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const key = process.env.REACT_APP_GIPHYKEY;
 const request = `https://api.giphy.com/v1/gifs/random?api_key=${key}&tag=blazeit&rating=pg-13&limit=1`;
-const token = process.env.REACT_APP_VERIFICATION_TOKEN;
+const token = process.env.REACT_APP_TOKEN;
 
 class Content extends Component {
   state = {
@@ -19,7 +19,7 @@ class Content extends Component {
     axios
       .post(`https://slack.com/api/conversations.list`, token)
       .then((res) => {
-        console.log('in slack call', res);
+        console.log('in slack call', res.data);
       })
       .catch((error) => {
         console.log(error);
