@@ -15,19 +15,29 @@ class Content extends Component {
     },
   };
   componentDidMount() {
-    //this needs to be a function triggered by 420pm.
-    axios
-      .get(request)
-      .then((res) => {
-        // this.setState({
-        //   gif: res.data.data.image_url, //grabbing gif url, setting it to gif state
-        // });
-        this.findConversations(res.data.data.image_url);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    setInterval(this.timeCheck, 60000);
   }
+
+  timeCheck = () => {
+    const currentTime = new Date().toLocaleTimeString();
+    console.log(currentTime);
+    if (currentTime.includes('4:20') && currentTime.includes('PM')) {
+      console.log('time');
+
+      //this needs to be a function triggered by 420pm.
+      axios
+        .get(request)
+        .then((res) => {
+          // this.setState({
+          //   gif: res.data.data.image_url, //grabbing gif url, setting it to gif state
+          // });
+          this.findConversations(res.data.data.image_url);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
 
   findConversations = (image) => {
     axios
@@ -57,13 +67,13 @@ class Content extends Component {
         `https://slack.com/api/chat.postMessage`,
 
         {
-          channel: 'C01MZ027KUM',
+          channel: 'C01N23MV28J',
           blocks: [
             {
               type: 'section',
               text: {
                 type: 'mrkdwn',
-                text: '420 blaze it lol',
+                text: image,
               },
               accessory: {
                 type: 'image',
