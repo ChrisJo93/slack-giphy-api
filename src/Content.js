@@ -11,22 +11,50 @@ class Content extends Component {
   };
   componentDidMount() {
     //this needs to be a function triggered by 420pm.
-    axios.get(request).then((res) => {
-      this.setState({
-        gif: res.data.data.image_url, //grabbing gif url, setting it to gif state
+    axios
+      .get(request)
+      .then((res) => {
+        this.setState({
+          gif: res.data.data.image_url, //grabbing gif url, setting it to gif state
+        });
+        this.findConversations();
+      })
+      .catch((err) => {
+        console.log(err);
       });
-    });
+  }
+
+  findConversations = () => {
     axios
       .get(`https://slack.com/api/conversations.list`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        console.log('in slack call', res.data);
+        this.postToSlack();
+        console.log(res);
       })
       .catch((error) => {
         console.log(error);
       });
-  }
+  };
+
+  postToSlack = () => {
+    axios
+      .post(`https://slack.com/api/chat.postMessage`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          channel: 'C01KZTT9KPB',
+          text: this.state.gif,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   render() {
     return (
       <div>
