@@ -4,6 +4,7 @@ import axios from 'axios';
 const key = process.env.REACT_APP_GIPHYKEY;
 const request = `https://api.giphy.com/v1/gifs/random?api_key=${key}&tag=blazeit&rating=pg-13&limit=1`;
 const token = process.env.REACT_APP_TOKEN;
+const currentTime = new Date().toLocaleTimeString();
 
 class Content extends Component {
   state = {
@@ -15,22 +16,20 @@ class Content extends Component {
     },
   };
   componentDidMount() {
-    setInterval(this.timeCheck, 60000); //every minute runs check time function. If the time is correct, run api calls.
+    console.log(currentTime);
+    setInterval(this.timeCheck, 60000);
+    //every minute runs check time function. If the time is correct, run api calls.
   }
 
   timeCheck = () => {
-    const currentTime = new Date().toLocaleTimeString();
     console.log(currentTime);
-    if (currentTime.includes('4:15') && currentTime.includes('AM')) {
+    if (currentTime.includes('4:20') && currentTime.includes('PM')) {
       //lol.
       console.log('time');
 
       axios
         .get(request)
         .then((res) => {
-          // this.setState({
-          //   gif: res.data.data.image_url, //grabbing gif url, setting it to gif state
-          // });
           this.findConversations(res.data.data.image_url);
         })
         .catch((err) => {
