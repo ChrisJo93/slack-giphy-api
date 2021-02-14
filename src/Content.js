@@ -8,6 +8,11 @@ const token = process.env.REACT_APP_TOKEN;
 class Content extends Component {
   state = {
     gif: [],
+    header: {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
   };
   componentDidMount() {
     //this needs to be a function triggered by 420pm.
@@ -27,9 +32,13 @@ class Content extends Component {
   findConversations = () => {
     axios
       .get(`https://slack.com/api/conversations.list`, {
+        //hitting conversation list url, passing it auth header and token.
+        //this is superfluous step if channel id is already available. But nice to have.
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
+        //running api call to post to slack immediately after this list returns.
+        //Again, postToSlack could potentially run immediately after getting gif, but, hey.
         this.postToSlack();
         console.log(res);
       })
@@ -40,13 +49,19 @@ class Content extends Component {
 
   postToSlack = () => {
     axios
-      .post(`https://slack.com/api/chat.postMessage`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      .post(
+        `https://slack.com/api/chat.postMessage`,
+        {
           channel: 'C01KZTT9KPB',
-          text: this.state.gif,
+          text: 'behold',
+          attachments: [
+            {
+              image_url: this.state.gif,
+            },
+          ],
         },
-      })
+        this.state.header
+      )
       .then((res) => {
         console.log(res.data);
       })
