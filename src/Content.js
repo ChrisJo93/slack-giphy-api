@@ -15,16 +15,16 @@ class Content extends Component {
     },
   };
   componentDidMount() {
-    setInterval(this.timeCheck, 60000);
+    setInterval(this.timeCheck, 60000); //every minute runs check time function. If the time is correct, run api calls.
   }
 
   timeCheck = () => {
     const currentTime = new Date().toLocaleTimeString();
     console.log(currentTime);
     if (currentTime.includes('4:20') && currentTime.includes('PM')) {
+      //lol.
       console.log('time');
 
-      //this needs to be a function triggered by 420pm.
       axios
         .get(request)
         .then((res) => {
