@@ -21,7 +21,7 @@ class Content extends Component {
   timeCheck = () => {
     const currentTime = new Date().toLocaleTimeString();
     console.log(currentTime);
-    if (currentTime.includes('4:20') && currentTime.includes('PM')) {
+    if (currentTime.includes('4:15') && currentTime.includes('AM')) {
       //lol.
       console.log('time');
 
